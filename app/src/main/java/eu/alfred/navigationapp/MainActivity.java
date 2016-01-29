@@ -1,27 +1,15 @@
-package eu.alfred.helloalfred;
+package eu.alfred.navigationapp;
 
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-
 import eu.alfred.api.PersonalAssistant;
 import eu.alfred.api.PersonalAssistantConnection;
 import eu.alfred.api.sensors.SAFFacade;
-import eu.alfred.api.sensors.responses.SensorDataResponse;
 import eu.alfred.api.speech.Cade;
-import eu.alfred.api.speech.responses.CadeResponse;
 import eu.alfred.api.storage.CloudStorage;
 import eu.alfred.api.storage.responses.BucketResponse;
 
@@ -55,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(eu.alfred.navigationapp.R.layout.activity_main);
 
         cloudStorage = null;
         safFacade = null;
@@ -88,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(eu.alfred.navigationapp.R.menu.menu_main, menu);
         return true;
     }
 
@@ -100,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == eu.alfred.navigationapp.R.id.action_settings) {
             return true;
         }
 
@@ -108,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onBtnSaveClick(View view) {
-        EditText nameText = (EditText)this.findViewById(R.id.nameText);
+        EditText nameText = (EditText)this.findViewById(eu.alfred.navigationapp.R.id.nameText);
         saveText(nameText.getText().toString());
     }
 
@@ -257,7 +241,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void setText(String text){
 
-        TextView nameText = (TextView) this.findViewById(R.id.resultLabel);
+        TextView nameText = (TextView) this.findViewById(eu.alfred.navigationapp.R.id.resultLabel);
         nameText.setText(text);
     }
 
@@ -283,11 +267,11 @@ public class MainActivity extends ActionBarActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         // Define the notification settings.
-        builder.setSmallIcon(R.drawable.ic_launcher)
+        builder.setSmallIcon(eu.alfred.navigationapp.R.drawable.ic_launcher)
                 // In a real app, you may want to use a library like Volley
                 // to decode the Bitmap.
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),
-                        R.drawable.ic_launcher))
+                        eu.alfred.navigationapp.R.drawable.ic_launcher))
                 .setColor(Color.BLUE)
                 .setContentTitle(notificationDetails)
                 .setContentText("Notification")
