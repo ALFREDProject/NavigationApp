@@ -8,12 +8,18 @@
     tools:ignore="MergeRootFrame"
     tools:context=".MainActivity">
 
+    <!-- Custom view element, you want to show up-->
     <TextView
         android:id="@+id/battery_txtview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="test"/>
+        android:text="test" />
+    <!--                                         -->
 
-    <include layout="@layout/voice_btn_layout"/>
+    <include layout="@layout/voice_btn_layout"
+        android:visibility="visible"/>
 
 </RelativeLayout>
+
+
+

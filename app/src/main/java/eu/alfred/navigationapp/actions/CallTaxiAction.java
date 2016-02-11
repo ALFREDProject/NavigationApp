@@ -11,7 +11,7 @@ import eu.alfred.navigationapp.MainActivity;
 /**
  * Created by Gary on 05.02.2016.
  */
-public class CallTaxiAction implements ICadeCommand{
+public class CallTaxiAction implements ICadeCommand {
 
     MainActivity main;
     Cade cade;
