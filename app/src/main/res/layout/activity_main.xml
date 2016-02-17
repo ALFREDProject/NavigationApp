@@ -9,17 +9,17 @@
     tools:context=".MainActivity">
 
     <!-- Custom view element, you want to show up-->
-    <TextView
-        android:id="@+id/battery_txtview"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="test" />
+        tools:context="eu.alfred.navigationapp.MainActivity" />
     <!--                                         -->
 
     <include layout="@layout/voice_btn_layout"
         android:visibility="visible"/>
 
 </RelativeLayout>
-
-
-

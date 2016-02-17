@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "eu.alfred.navigationapp"
         minSdkVersion 18
-        targetSdkVersion 21
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -21,12 +21,16 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'eu.alfred.personalassistant.sharedlibrary:PersonalAssistantShared-debug@aar'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.google.maps.android:android-maps-utils:0.4.+'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.akexorcist:googledirectionlibrary:1.0.3'
 }
 
-repositories{
-    flatDir{
+
+repositories {
+    flatDir {
         dirs 'libs'
     }
 }

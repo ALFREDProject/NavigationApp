@@ -16,6 +16,9 @@ public class CallTaxiAction implements ICadeCommand {
     MainActivity main;
     Cade cade;
 
+    static final String CHEAP = "cheap";
+    static final String NEAR = "near";
+
     public CallTaxiAction(MainActivity main, Cade cade) {
         this.main = main;
         this.cade = cade;
@@ -23,6 +26,29 @@ public class CallTaxiAction implements ICadeCommand {
 
     @Override
     public void performAction(String s, Map<String, String> map) {
-        Log.i("Navigation-Log",map.get("taxi_to_call"));
+        String calledAction = map.get("taxi_to_call");
+        Log.i("Navigation-Log",calledAction);
+
+        switch (calledAction) {
+            case CHEAP:
+                break;
+            case NEAR:
+                break;
+        }
+    }
+
+    @Override
+    public void performWhQuery(String s, Map<String, String> map) {
+
+    }
+
+    @Override
+    public void performValidity(String s, Map<String, String> map) {
+
+    }
+
+    @Override
+    public void performEntityRecognizer(String s, Map<String, String> map) {
+
     }
 }
