@@ -22,12 +22,9 @@ package="eu.alfred.navigationapp">
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    <activity android:name="eu.alfred.navigationapp.PlacePickerActivity">
-
-    </activity>
 
     <meta-data android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyBr5Qj5VwwHuNYTHliSIgqlxDsengprfkA" />
+        android:value="AIzaSyAFyfSNIwGO0o_0eAytM92K_7n28BQkTAQ" />
 
 </application>
 
