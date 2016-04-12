@@ -207,9 +207,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
         mCurrentLocation = location;
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(location.getLatitude(),location.getLongitude()))      // Sets the center of the map to Mountain View
-                .zoom(17)                   // Sets the zoom
-                .bearing(90)                // Sets the orientation of the camera to east
-                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                .zoom(17)                   // Sets the zoom// Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
         gmap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }

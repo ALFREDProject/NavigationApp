@@ -48,11 +48,9 @@ public class ShowWayHomeAction implements ICadeCommand, RoutingListener {
         try {
             address = new Geocoder(main).getFromLocationName(calledAction, 5);
             Address location=address.get(0);
-            location.getLatitude();
-            location.getLongitude();
 
             LatLng start = new LatLng(Double.valueOf(map.get("ownLat")), Double.valueOf(map.get("ownLng")));
-            LatLng end = new LatLng(52, 13);
+            LatLng end = new LatLng(location.getLatitude(), location.getLongitude());
 
             Routing routing = new Routing.Builder()
                     .travelMode(Routing.TravelMode.WALKING)
