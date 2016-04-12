@@ -113,7 +113,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
                 default:
                     break;
             }
-        } else {
+        } else if (personalAssistant!=null) {
             int interval = 200; // 1 Second
             Handler handler = new Handler();
             Runnable runnable = new Runnable(){
@@ -122,6 +122,8 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
                 }
             };
             handler.postDelayed(runnable, interval);
+        } else {
+
         }
     }
 
@@ -182,16 +184,16 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
             @Override
             public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
                 Log.d("LOG_TAG", "Got results: " + likelyPlaces.getCount() + " place found.");
-
-                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    Log.i("LOG_TAG", String.format("Place '%s' has likelihood: '%s'",
-                            placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getPlace().getPlaceTypes().toString()));
+                if(likelyPlaces.getCount()!=0) {
+                    for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                        Log.i("LOG_TAG", String.format("Place '%s' has likelihood: '%s'",
+                                placeLikelihood.getPlace().getName(),
+                                placeLikelihood.getPlace().getPlaceTypes().toString()));
+                    }
+                    nearPlaceLatLng = new LatLng(likelyPlaces.get(0).getPlace().getLatLng().latitude,
+                            likelyPlaces.get(0).getPlace().getLatLng().longitude);
+                    nearPlaceString = new String(likelyPlaces.get(0).getPlace().getName().toString());
                 }
-                nearPlaceLatLng = new LatLng(likelyPlaces.get(0).getPlace().getLatLng().latitude,
-                        likelyPlaces.get(0).getPlace().getLatLng().longitude);
-                nearPlaceString = new String(likelyPlaces.get(0).getPlace().getName().toString());
-
                 likelyPlaces.release();
             }
         });
