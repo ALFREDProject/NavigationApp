@@ -227,7 +227,9 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
 
     @Override
     public void onStop() {
-        mGoogleApiClient.disconnect();
+        if(mGoogleApiClient!=null) {
+            mGoogleApiClient.disconnect();
+        }
         super.onStop();
     }
 
