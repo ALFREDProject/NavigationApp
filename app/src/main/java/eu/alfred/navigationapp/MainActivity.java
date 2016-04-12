@@ -233,7 +233,9 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
 
     @Override
     protected void onPause() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        if (mGoogleApiClient!=null && mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
         super.onPause();
     }
 
