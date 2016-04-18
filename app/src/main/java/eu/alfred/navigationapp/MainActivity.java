@@ -28,13 +28,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Map;
 
-import eu.alfred.api.proxies.interfaces.ICadeCommand;
 import eu.alfred.navigationapp.actions.ShowWayHomeAction;
 import eu.alfred.navigationapp.actions.WhereAmIQuery;
 import eu.alfred.ui.AppActivity;
 import eu.alfred.ui.CircleButton;
 
-public class MainActivity extends AppActivity implements ICadeCommand, OnMapReadyCallback,
+public class MainActivity extends AppActivity implements OnMapReadyCallback,
         LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -61,17 +60,20 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
 
         circleButton = (CircleButton) findViewById(R.id.voiceControlBtn);
         circleButton.setOnTouchListener(new CircleTouchListener());
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        } else {
+            SupportMapFragment mapFragment =
+                    (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-        mapFragment.getMapAsync(this);
+            mapFragment.getMapAsync(this);
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gmap = googleMap;
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -82,7 +84,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        this.mGoogleApiClient = new GoogleApiClient.Builder(this)
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
@@ -91,6 +93,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
                 .build();
 
         mGoogleApiClient.connect();
+        Log.i("bbbbbb", "bbbbbb2");
     }
 
     @Override
@@ -105,6 +108,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
         if(mCurrentLocation!=null && gmap!=null) {
             switch (calledAction) {
                 case SHOW_WAY_TO_TOWN_ACTION:
+                    gmap.clear();
                     map.put("ownLat", String.valueOf(mCurrentLocation.getLatitude()));
                     map.put("ownLng", String.valueOf(mCurrentLocation.getLongitude()));
                     ShowWayHomeAction sha = new ShowWayHomeAction(this, cade, gmap);
@@ -113,7 +117,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
                 default:
                     break;
             }
-        } else if (personalAssistant!=null) {
+        } else {
             int interval = 200; // 1 Second
             Handler handler = new Handler();
             Runnable runnable = new Runnable(){
@@ -122,8 +126,6 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
                 }
             };
             handler.postDelayed(runnable, interval);
-        } else {
-
         }
     }
 
@@ -132,6 +134,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
         if(nearPlaceLatLng!=null && gmap!=null) {
             switch (calledAction) {
                 case WHERE_AM_I_QUERY:
+                    gmap.clear();
                     map.put("nearLat", String.valueOf(nearPlaceLatLng.latitude));
                     map.put("nearLng", String.valueOf(nearPlaceLatLng.longitude));
                     map.put("name", String.valueOf(nearPlaceString));
@@ -164,6 +167,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
     @Override
     public void onConnected(Bundle bundle) {
         startLocationUpdates();
+        Log.i("bbbbbb","bbbbbb");
     }
 
     private void startLocationUpdates() {
@@ -184,7 +188,7 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
             @Override
             public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
                 Log.d("LOG_TAG", "Got results: " + likelyPlaces.getCount() + " place found.");
-                if(likelyPlaces.getCount()!=0) {
+                if (likelyPlaces.getCount() != 0) {
                     for (PlaceLikelihood placeLikelihood : likelyPlaces) {
                         Log.i("LOG_TAG", String.format("Place '%s' has likelihood: '%s'",
                                 placeLikelihood.getPlace().getName(),
@@ -209,22 +213,22 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
         mCurrentLocation = location;
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(location.getLatitude(),location.getLongitude()))      // Sets the center of the map to Mountain View
-                .zoom(17)                   // Sets the zoom// Sets the tilt of the camera to 30 degrees
+                .zoom(12)                   // Sets the zoom// Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
         gmap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        Log.i("CONNN", connectionResult.getErrorMessage());
     }
 
     @Override
     public void onStart() {
-        if(mGoogleApiClient!=null) {
+        super.onStart();
+        if(mGoogleApiClient !=null) {
             mGoogleApiClient.connect();
         }
-        super.onStart();
     }
 
     @Override
@@ -251,4 +255,19 @@ public class MainActivity extends AppActivity implements ICadeCommand, OnMapRead
         super.onResume();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for(int i = 0; i < grantResults.length; i++) {
+            if(grantResults[i] == PackageManager.PERMISSION_GRANTED){
+                Log.v("AAA","Permission: "+permissions[0]+ "was "+grantResults[0]);
+            } else {
+                finish();
+            }
+        }
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+        mapFragment.getMapAsync(this);
+    }
 }
