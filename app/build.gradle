@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "eu.alfred.navigationapp"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -19,23 +19,19 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'eu.alfred.personalassistant.sharedlibrary:PersonalAssistantShared-debug@aar'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-
-    compile 'com.google.maps.android:android-maps-utils:0.4.+'
-    compile 'com.google.android.gms:play-services:8.4.0'
-    compile 'com.github.jd-alexander:library:1.1.0'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
-    compile 'com.google.android.gms:play-services-auth:8.4.0'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
-}
-
 repositories {
     flatDir {
         dirs 'libs'
     }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'eu.alfred.personalassistant.sharedlibrary:PersonalAssistantShared-debug@aar'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.google.maps.android:android-maps-utils:0.4.+'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.github.jd-alexander:library:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
