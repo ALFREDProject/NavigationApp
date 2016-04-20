@@ -28,11 +28,19 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'eu.alfred.personalassistant.sharedlibrary:PersonalAssistantShared-debug@aar'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:24.0.0-alpha2'
     compile 'com.google.maps.android:android-maps-utils:0.4.+'
-    compile 'com.google.android.gms:play-services:8.4.0@aar'
-    compile 'com.google.android.gms:play-services-auth:8.4.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.github.jd-alexander:library:1.1.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
 }
+
+
+
+
+
+
 
 apply plugin: 'com.google.gms.google-services'
