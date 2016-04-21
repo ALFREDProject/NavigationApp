@@ -41,12 +41,15 @@ public class ShowWayHomeAction implements ICadeCommand, RoutingListener {
 
     @Override
     public void performAction(String name, Map<String, String> map) {
+        Log.i("TOOOOO",map.get("selected_town"));
         String calledAction = map.get("selected_town");
-        Log.i("Navigation-Log", calledAction);
 
         List<Address> address = null;
         try {
             address = new Geocoder(main).getFromLocationName(calledAction, 5);
+            if(address.isEmpty()) {
+                cade.sendActionResult(false);
+            }
             Address location=address.get(0);
 
             LatLng start = new LatLng(Double.valueOf(map.get("ownLat")), Double.valueOf(map.get("ownLng")));
