@@ -67,7 +67,6 @@ public class MainActivity extends AppActivity implements OnMapReadyCallback,
                     (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
             mapFragment.getMapAsync(this);
-
         }
     }
 
