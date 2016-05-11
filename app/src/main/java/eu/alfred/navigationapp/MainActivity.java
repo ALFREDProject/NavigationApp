@@ -31,6 +31,7 @@ import java.util.Map;
 import eu.alfred.navigationapp.actions.ShowWayHomeAction;
 import eu.alfred.navigationapp.actions.WhereAmIQuery;
 import eu.alfred.ui.AppActivity;
+import eu.alfred.ui.BackToPAButton;
 import eu.alfred.ui.CircleButton;
 
 public class MainActivity extends AppActivity implements OnMapReadyCallback,
@@ -59,7 +60,11 @@ public class MainActivity extends AppActivity implements OnMapReadyCallback,
         setContentView(R.layout.activity_main);
 
         circleButton = (CircleButton) findViewById(R.id.voiceControlBtn);
-        circleButton.setOnTouchListener(new CircleTouchListener());
+        circleButton.setOnTouchListener(new MicrophoneTouchListener());
+
+        backToPAButton = (BackToPAButton) findViewById(R.id.backControlBtn);
+        backToPAButton.setOnTouchListener(new BackTouchListener());
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         } else {
