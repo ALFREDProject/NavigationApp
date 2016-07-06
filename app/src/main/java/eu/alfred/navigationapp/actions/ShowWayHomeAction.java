@@ -42,13 +42,38 @@ public class ShowWayHomeAction implements ICadeCommand, RoutingListener {
     @Override
     public void performAction(String name, Map<String, String> map) {
         Log.i("TOOOOO",map.get("selected_town"));
-        String calledAction = map.get("selected_town");
+        String calledAction = map.get("selected_place");
+        String m = map.get("selected_transport");
+
+        Routing.TravelMode travelMode = Routing.TravelMode.DRIVING;
+
+        switch (m) {
+            case("walk"):
+            case("marche"):
+            case("lopen"):
+                travelMode = Routing.TravelMode.WALKING;
+                break;
+            case("bike"):
+            case("vélo"):
+            case("fiets"):
+                travelMode = Routing.TravelMode.BIKING;
+                break;
+            case("car"):
+            case("auto"):
+            case("voiture"):
+                travelMode = Routing.TravelMode.DRIVING;
+                break;
+            case("transit"):
+            case("doorvoer"):
+                travelMode = Routing.TravelMode.TRANSIT;
+                break;
+        }
 
         List<Address> address = null;
         try {
             address = new Geocoder(main).getFromLocationName(calledAction, 5);
             if(address.isEmpty()) {
-                cade.sendActionResult(false);
+                cade.sendActionResult(true);
             }
             Address location=address.get(0);
 
@@ -56,7 +81,7 @@ public class ShowWayHomeAction implements ICadeCommand, RoutingListener {
             LatLng end = new LatLng(location.getLatitude(), location.getLongitude());
 
             Routing routing = new Routing.Builder()
-                    .travelMode(Routing.TravelMode.WALKING)
+                    .travelMode(travelMode)
                     .withListener(this)
                     .waypoints(start, end)
                     .key("AIzaSyAFyfSNIwGO0o_0eAytM92K_7n28BQkTAQ")
