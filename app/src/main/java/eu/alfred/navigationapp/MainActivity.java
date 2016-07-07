@@ -26,7 +26,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import eu.alfred.navigationapp.actions.ShowWayHomeAction;
@@ -105,7 +104,6 @@ public class MainActivity extends AppActivity implements OnMapReadyCallback,
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        performAction(SHOW_WAY_TO_TOWN_ACTION, new HashMap<String, String>());
     }
 
     @Override

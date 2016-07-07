@@ -3,8 +3,6 @@ package eu.alfred.navigationapp.actions;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.directions.route.Route;
 import com.directions.route.RouteException;
@@ -41,7 +39,6 @@ public class ShowWayHomeAction implements ICadeCommand, RoutingListener {
 
     @Override
     public void performAction(String name, Map<String, String> map) {
-        Log.i("TOOOOO",map.get("selected_town"));
         String calledAction = map.get("selected_place");
         String m = map.get("selected_transport");
 
@@ -108,7 +105,7 @@ public class ShowWayHomeAction implements ICadeCommand, RoutingListener {
     }
     @Override
     public void onRoutingFailure(RouteException e) {
-        Toast.makeText(main, e.getMessage(),Toast.LENGTH_LONG).show();
+        cade.sendActionResult(true);
     }
 
     @Override
